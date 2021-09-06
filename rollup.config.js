@@ -1,5 +1,5 @@
 /**
- * A webpack to turn the svelte code to JS code
+ * A webpack to turn the svelte code to JS code,
  */
 
 import svelte from "rollup-plugin-svelte";

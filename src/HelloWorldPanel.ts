@@ -37,7 +37,7 @@ export class HelloWorldPanel {
         // And restrict the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
           vscode.Uri.joinPath(extensionUri, "media"),
-          vscode.Uri.joinPath(extensionUri, "out/compiled"),
+          vscode.Uri.joinPath(extensionUri, "out/compiled"), // converted JS from svelte
         ],
       }
     );
@@ -125,7 +125,7 @@ export class HelloWorldPanel {
   private _getHtmlForWebview(webview: vscode.Webview) {
     // // And the uri we use to load this script in the webview
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "out/compiled", "HelloWorld.js")
+      vscode.Uri.joinPath(this._extensionUri, "out/compiled", "HelloWorld.js") // converted JS from svelte
     );
 
     // Local path to css styles
