@@ -1,4 +1,4 @@
-// The module 'vscode' contains the VS Code extensibility API
+// The module 'vscode' contains the VS Code extensibility API - For interaction with VSCode.
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { HelloWorldPanel } from "./HelloWorldPanel";
@@ -11,6 +11,13 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("vstodo.helloWorld", function () {
+      HelloWorldPanel.createOrShow(context.extensionUri);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("vstodo.refresh", function () {
+      HelloWorldPanel.kill();
       HelloWorldPanel.createOrShow(context.extensionUri);
     })
   );
