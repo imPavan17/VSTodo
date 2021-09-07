@@ -1,9 +1,25 @@
 <script>
-    // export let tsvscode;
+    import { onMount } from "svelte";
+
+    let todos = [];
+
+    onMount(() => {
+        window.addEventListener("message", (e) => {
+            const message = e.data; // the data that the extension sent
+            console.log(message);
+            switch (message.type) {
+                case 'new-todo':
+                todos = [{ text: message.value }, ...todos];
+                break;
+            }
+        })
+    })
 </script>
 
 <div>
-
+    {#each todos as todo}
+        <p>{todo.text}</p>
+    {/each}
 </div>
 
 <button on:click={() => {

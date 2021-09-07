@@ -11,8 +11,39 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "vstodo" is now active!');
 
   const sidebarProvider = new SidebarProvider(context.extensionUri);
+
+  /** A button in the below bar */
+  const item = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Right
+  );
+  item.text = "$(beaker) Add todo";
+  item.command = "vstodo.addTodo"; // to activate the specific action
+  item.show();
+
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider("vstodo-sidebar", sidebarProvider)
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("vstodo.addTodo", function () {
+      const { activeTextEditor } = vscode.window;
+
+      if (!activeTextEditor) {
+        vscode.window.showInformationMessage("No active window");
+      } else {
+        const text = activeTextEditor.document.getText(
+          activeTextEditor.selection
+        );
+        vscode.window.showInformationMessage(text);
+
+        /** To send data from vs to webview(Svelts) */
+
+        sidebarProvider._view?.webview.postMessage({
+          type: "new-todo",
+          value: text,
+        });
+      }
+    })
   );
 
   context.subscriptions.push(
